@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyderabad, In Motion — a personal essay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22201B;
+    --ink-soft:#4A473E;
+    --paper:#F7F4ED;
+    --panel:#EFE9D9;
+    --panel-line:#E1D8BF;
+    --teal:#0F5C53;
+    --teal-deep:#0B4038;
+    --saffron:#B9790A;
+    --rule: rgba(34,32,27,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,blockquote{
+    font-family:'Newsreader', serif;
+    margin:0;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  img,svg{max-width:100%;display:block;}
+
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:rgba(247,244,237,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:16px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .topbar .brand{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    font-size:1rem;
+    color:var(--ink);
+  }
+  .topbar nav{
+    display:flex;
+    gap:22px;
+  }
+  .topbar nav a{
+    font-size:0.9rem;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .topbar nav a:hover{
+    color:var(--teal-deep);
+    border-color:var(--teal-deep);
+  }
+  @media (max-width:560px){
+    .topbar nav{gap:14px;}
+    .topbar nav a{font-size:0.82rem;}
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    padding:72px 0 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .masthead-inner{padding-bottom:44px;}
+  .kicker{
+    font-size:0.95rem;
+    color:var(--teal);
+    margin-bottom:18px;
+    opacity:0;
+    animation:riseIn 0.7s ease forwards 0.05s;
+  }
+  h1{
+    font-size:clamp(2.6rem, 6vw, 4rem);
+    font-weight:500;
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    max-width:14ch;
+    opacity:0;
+    animation:riseIn 0.8s ease forwards 0.18s;
+  }
+  .dek{
+    margin-top:22px;
+    font-size:1.15rem;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:44ch;
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    opacity:0;
+    animation:riseIn 0.8s ease forwards 0.32s;
+  }
+  .meta{
+    margin-top:32px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    font-size:0.88rem;
+    color:var(--ink-soft);
+    opacity:0;
+    animation:riseIn 0.8s ease forwards 0.44s;
+  }
+  .meta span:not(:last-child)::after{
+    content:"";
+    display:inline-block;
+    width:4px; height:4px;
+    border-radius:50%;
+    background:var(--ink-soft);
+    margin-left:18px;
+    vertical-align:middle;
+  }
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .blueprint{
+    width:100%;
+    background:#0E3A63;
+    margin-top:44px;
+    position:relative;
+    overflow:hidden;
+  }
+  .blueprint-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:30px 32px 26px;
+  }
+  .blueprint svg{width:100%; height:auto; display:block;}
+  .blueprint .grid-line{stroke:#3E6699; stroke-width:0.6; opacity:0.55;}
+  .blueprint .grid-line-bold{stroke:#3E6699; stroke-width:1; opacity:0.85;}
+  .bp-fill path{
+    fill:#F2C744;
+    opacity:0;
+    animation:winIn 0.55s ease forwards;
+  }
+  .bp-hatch path{
+    fill:url(#hatch);
+    opacity:0;
+    animation:winIn 0.55s ease forwards;
+  }
+  .bp-building{
+    filter:url(#sketchy);
+  }
+  .bp-building path{
+    fill:none;
+    stroke:#FAFBFF;
+    stroke-width:1.5;
+    stroke-linejoin:round;
+    stroke-linecap:round;
+    stroke-dasharray:100%;
+    stroke-dashoffset:100%;
+    animation-name:draw;
+    animation-timing-function:cubic-bezier(.65,0,.35,1);
+    animation-fill-mode:forwards;
+  }
+  .bp-building path:nth-child(3n+1){animation-duration:0.72s;}
+  .bp-building path:nth-child(3n+2){animation-duration:0.95s;}
+  .bp-building path:nth-child(3n){animation-duration:0.85s;}
+  .pencil{
+    opacity:0;
+  }
+  .pencil-body{
+    stroke:#22201B;
+    stroke-width:2.2;
+    stroke-linecap:round;
+  }
+  .pencil-tip{
+    fill:#F2C744;
+    stroke:#22201B;
+    stroke-width:0.6;
+  }
+  .bp-dim{
+    stroke:#F5F8FF;
+    stroke-width:0.9;
+    opacity:0;
+    animation:fadeIn 0.6s ease forwards 2.55s;
+  }
+  .bp-label{
+    fill:#F5F8FF;
+    font-family:'Courier New', monospace;
+    font-size:7px;
+    opacity:0;
+    animation:fadeIn 0.6s ease forwards 2.75s;
+  }
+  .bp-height{
+    fill:#F5F8FF;
+    font-family:'Courier New', monospace;
+    font-size:6px;
+    opacity:0;
+    animation:fadeIn 0.5s ease forwards 2.3s;
+  }
+  .bp-title text{
+    fill:#F5F8FF;
+    font-family:'Courier New', monospace;
+  }
+  .bp-title rect{
+    fill:none;
+    stroke:#7FA0C9;
+    stroke-width:0.8;
+  }
+  .scan-glow{
+    animation:scan 2.5s cubic-bezier(.3,.8,.4,1) forwards 0.15s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadeIn{ to{ opacity:1; } }
+  @keyframes winIn{ to{ opacity:1; } }
+  @keyframes scan{
+    from{ transform:translateX(-40px); opacity:0.9; }
+    85%{ opacity:0.9; }
+    to{ transform:translateX(800px); opacity:0; }
+  }
+  @keyframes sketchMove{ to{ opacity:0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .kicker,h1,.dek,.meta{animation:none; opacity:1;}
+    .bp-building path,.bp-dim,.bp-label,.bp-fill path,.bp-hatch path,.bp-height{animation:none; opacity:1; stroke-dashoffset:0;}
+    .bp-fill path{opacity:0.85;}
+    .bp-hatch path{opacity:0.3;}
+    .scan-glow,.pencil{display:none;}
+  }
+
+  /* ---------- CHAPTERS ---------- */
+  .chapter{
+    padding:56px 0;
+    border-bottom:1px solid var(--rule);
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:28px;
+    scroll-margin-top:64px;
+  }
+  .chapter:last-of-type{border-bottom:none;}
+  .num{
+    font-family:'Newsreader', serif;
+    font-size:1.3rem;
+    color:var(--saffron);
+    font-style:italic;
+    padding-top:4px;
+  }
+  .chapter h2{
+    font-size:1.65rem;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:20px;
+  }
+  .chapter p{
+    font-size:1.08rem;
+    line-height:1.75;
+    color:#2E2C25;
+    max-width:60ch;
+  }
+  .chapter p + p{margin-top:18px;}
+  .chapter:first-of-type p:first-of-type::first-letter{
+    font-family:'Newsreader', serif;
+    font-size:3.6rem;
+    font-weight:500;
+    float:left;
+    line-height:0.85;
+    padding-right:10px;
+    padding-top:6px;
+    color:var(--teal);
+  }
+
+  blockquote{
+    margin:34px 0 6px 0;
+    padding-left:22px;
+    border-left:2px solid var(--saffron);
+    font-size:1.35rem;
+    font-style:italic;
+    font-weight:400;
+    line-height:1.5;
+    color:var(--ink);
+    max-width:42ch;
+  }
+
+  .icon-row{
+    display:flex;
+    gap:16px;
+    margin:26px 0 4px;
+  }
+  .icon-row svg{width:44px;height:44px;}
+
+  /* ---------- GIVING BACK ---------- */
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--panel-line);
+    border:1px solid var(--panel-line);
+    margin:30px 0 40px;
+  }
+  .stat{
+    background:var(--panel);
+    padding:26px 18px;
+    text-align:center;
+  }
+  .stat .figure{
+    font-family:'Newsreader', serif;
+    font-size:2.1rem;
+    font-weight:500;
+    color:var(--teal-deep);
+  }
+  .stat .label{
+    margin-top:6px;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  .spotlight-label{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    margin:34px 0 14px;
+  }
+  .spotlight-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .cause{
+    border:1px solid var(--rule);
+    background:var(--panel);
+    padding:22px 20px;
+    display:flex;
+    flex-direction:column;
+  }
+  .cause .glyph{
+    width:36px;height:36px;
+    margin-bottom:14px;
+  }
+  .cause h3{
+    font-size:1.05rem;
+    font-weight:500;
+    color:var(--teal-deep);
+    margin-bottom:8px;
+  }
+  .cause p{
+    margin:0 0 14px;
+    font-size:0.95rem;
+    line-height:1.6;
+    color:var(--ink-soft);
+    flex-grow:1;
+  }
+  .cause .tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .cause .tag{
+    font-size:0.75rem;
+    color:var(--teal-deep);
+    background:var(--paper);
+    border:1px solid var(--panel-line);
+    padding:3px 9px;
+    border-radius:2px;
+  }
+  .cause .year{
+    font-size:0.78rem;
+    color:var(--saffron);
+    font-weight:600;
+    margin-bottom:6px;
+    display:block;
+  }
+  @media (max-width:600px){
+    .spotlight-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- COLOPHON ---------- */
+  footer{
+    padding:60px 0 90px;
+  }
+  footer .rule{
+    height:1px;
+    background:var(--rule);
+    margin-bottom:32px;
+  }
+  footer p{
+    font-size:0.92rem;
+    color:var(--ink-soft);
+    max-width:50ch;
+    line-height:1.6;
+  }
+  footer .sign{
+    margin-top:14px;
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--ink);
+  }
+  footer .sources{
+    margin-top:26px;
+    font-size:0.78rem;
+    color:#7C7869;
+  }
+  footer .back{
+    display:inline-block;
+    margin-top:28px;
+    font-size:0.85rem;
+    color:var(--teal-deep);
+    text-decoration:none;
+    border-bottom:1px solid var(--panel-line);
+  }
+
+  @media (max-width:600px){
+    .wrap, .skyline-wrap{padding-left:22px; padding-right:22px;}
+    .masthead{padding:52px 0 0;}
+    .chapter{grid-template-columns:1fr; gap:10px;}
+    .num{padding-top:0;}
+    .cause{grid-template-columns:1fr; gap:10px;}
+    .stat-strip{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="top">
+  <div class="topbar-inner">
+    <span class="brand">Field notes</span>
+    <nav>
+      <a href="#city">The city</a>
+      <a href="#work">The work</a>
+      <a href="#giving">Giving back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="kicker">Field notes from Hyderabad</div>
+    <h1>Hyderabad, in motion</h1>
+    <div class="meta">
+      <span>Personal essay</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+  <div class="blueprint">
+    <div class="blueprint-inner">
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+          <path d="M18 0H0V18" fill="none" stroke="#3E6699" stroke-width="0.4" opacity="0.4"/>
+        </pattern>
+        <pattern id="gridBold" width="90" height="90" patternUnits="userSpaceOnUse">
+          <path d="M90 0H0V90" fill="none" stroke="#5480AD" stroke-width="0.7" opacity="0.5"/>
+        </pattern>
+        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#FFFFFF" stroke-width="0.6" opacity="0.5"/>
+        </pattern>
+        <filter id="sketchy" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.03" numOctaves="2" seed="7" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+        </filter>
+        <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#F5F8FF" stop-opacity="0"/>
+          <stop offset="0.5" stop-color="#F5F8FF" stop-opacity="1"/>
+          <stop offset="1" stop-color="#F5F8FF" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="glow" x="-100%" y="-20%" width="300%" height="140%">
+          <feGaussianBlur stdDeviation="4"/>
+        </filter>
+      </defs>
+
+      <rect x="0" y="0" width="760" height="200" fill="url(#grid)"/>
+      <rect x="0" y="0" width="760" height="200" fill="url(#gridBold)"/>
+
+      <!-- compass -->
+      <g transform="translate(718,26)" stroke="#F5F8FF" fill="none" stroke-width="0.9">
+        <circle r="14"/>
+        <path d="M0 -14 L0 14 M-14 0 L14 0" stroke-width="0.5" opacity="0.6"/>
+        <path d="M0 -14 L3.5 -2 L0 -5 L-3.5 -2 Z" fill="#F5F8FF" stroke="none"/>
+        <text x="0" y="-17" text-anchor="middle" font-family="Courier New, monospace" font-size="6" fill="#F5F8FF">N</text>
+      </g>
+
+      <!-- yellow massing fill, one shape per tower -->
+      <g class="bp-fill">
+        <path d="M20 150 V90 H50 V150 Z" style="animation-delay:0.6s"/>
+        <path d="M60 150 V60 H90 V150 Z" style="animation-delay:0.66s"/>
+        <path d="M100 150 V100 H120 V150 Z" style="animation-delay:0.72s"/>
+        <path d="M130 150 V40 L145 20 L160 40 V150 Z" style="animation-delay:0.78s"/>
+        <path d="M170 150 V110 H190 V150 Z" style="animation-delay:0.84s"/>
+        <path d="M200 150 V70 H235 V150 Z" style="animation-delay:0.9s"/>
+        <path d="M245 150 V95 H265 V150 Z" style="animation-delay:0.96s"/>
+        <path d="M275 150 V30 H305 V150 Z" style="animation-delay:1.02s"/>
+        <path d="M315 150 V85 H340 V150 Z" style="animation-delay:1.08s"/>
+        <path d="M350 150 V105 H370 V150 Z" style="animation-delay:1.14s"/>
+        <path d="M380 150 V50 H412 V150 Z" style="animation-delay:1.2s"/>
+        <path d="M420 150 V95 H442 V150 Z" style="animation-delay:1.26s"/>
+        <path d="M452 150 V25 L466 8 L480 25 V150 Z" style="animation-delay:1.32s"/>
+        <path d="M490 150 V100 H512 V150 Z" style="animation-delay:1.38s"/>
+        <path d="M522 150 V65 H556 V150 Z" style="animation-delay:1.44s"/>
+        <path d="M566 150 V105 H586 V150 Z" style="animation-delay:1.5s"/>
+        <path d="M596 150 V45 H620 V150 Z" style="animation-delay:1.56s"/>
+        <path d="M630 150 V90 H652 V150 Z" style="animation-delay:1.62s"/>
+        <path d="M662 150 V60 H692 V150 Z" style="animation-delay:1.68s"/>
+        <path d="M702 150 V100 H730 V150 Z" style="animation-delay:1.74s"/>
+      </g>
+
+      <!-- pencil hatch texture over the fills -->
+      <g class="bp-hatch">
+        <path d="M20 150 V90 H50 V150 Z" style="animation-delay:0.75s"/>
+        <path d="M60 150 V60 H90 V150 Z" style="animation-delay:0.81s"/>
+        <path d="M100 150 V100 H120 V150 Z" style="animation-delay:0.87s"/>
+        <path d="M130 150 V40 L145 20 L160 40 V150 Z" style="animation-delay:0.93s"/>
+        <path d="M170 150 V110 H190 V150 Z" style="animation-delay:0.99s"/>
+        <path d="M200 150 V70 H235 V150 Z" style="animation-delay:1.05s"/>
+        <path d="M245 150 V95 H265 V150 Z" style="animation-delay:1.11s"/>
+        <path d="M275 150 V30 H305 V150 Z" style="animation-delay:1.17s"/>
+        <path d="M315 150 V85 H340 V150 Z" style="animation-delay:1.23s"/>
+        <path d="M350 150 V105 H370 V150 Z" style="animation-delay:1.29s"/>
+        <path d="M380 150 V50 H412 V150 Z" style="animation-delay:1.35s"/>
+        <path d="M420 150 V95 H442 V150 Z" style="animation-delay:1.41s"/>
+        <path d="M452 150 V25 L466 8 L480 25 V150 Z" style="animation-delay:1.47s"/>
+        <path d="M490 150 V100 H512 V150 Z" style="animation-delay:1.53s"/>
+        <path d="M522 150 V65 H556 V150 Z" style="animation-delay:1.59s"/>
+        <path d="M566 150 V105 H586 V150 Z" style="animation-delay:1.65s"/>
+        <path d="M596 150 V45 H620 V150 Z" style="animation-delay:1.71s"/>
+        <path d="M630 150 V90 H652 V150 Z" style="animation-delay:1.77s"/>
+        <path d="M662 150 V60 H692 V150 Z" style="animation-delay:1.83s"/>
+        <path d="M702 150 V100 H730 V150 Z" style="animation-delay:1.89s"/>
+      </g>
+
+      <!-- hand-sketched structural outlines, drawn one after another -->
+      <g class="bp-building">
+        <path d="M20 150 V90 H50 V150" style="animation-delay:0.3s"/>
+        <path d="M60 150 V60 H90 V150" style="animation-delay:0.36s"/>
+        <path d="M100 150 V100 H120 V150" style="animation-delay:0.42s"/>
+        <path d="M130 150 V40 H160 V150 M130 40 L145 20 L160 40" style="animation-delay:0.48s"/>
+        <path d="M170 150 V110 H190 V150" style="animation-delay:0.54s"/>
+        <path d="M200 150 V70 H235 V150" style="animation-delay:0.6s"/>
+        <path d="M245 150 V95 H265 V150" style="animation-delay:0.66s"/>
+        <path d="M275 150 V30 H305 V150 M281 30 V16 M299 30 V16" style="animation-delay:0.72s"/>
+        <path d="M315 150 V85 H340 V150" style="animation-delay:0.78s"/>
+        <path d="M350 150 V105 H370 V150" style="animation-delay:0.84s"/>
+        <path d="M380 150 V50 H412 V150" style="animation-delay:0.9s"/>
+        <path d="M420 150 V95 H442 V150" style="animation-delay:0.96s"/>
+        <path d="M452 150 V25 H480 V150 M452 25 L466 8 L480 25" style="animation-delay:1.02s"/>
+        <path d="M490 150 V100 H512 V150" style="animation-delay:1.08s"/>
+        <path d="M522 150 V65 H556 V150" style="animation-delay:1.14s"/>
+        <path d="M566 150 V105 H586 V150" style="animation-delay:1.2s"/>
+        <path d="M596 150 V45 H620 V150" style="animation-delay:1.26s"/>
+        <path d="M630 150 V90 H652 V150" style="animation-delay:1.32s"/>
+        <path d="M662 150 V60 H692 V150" style="animation-delay:1.38s"/>
+        <path d="M702 150 V100 H730 V150" style="animation-delay:1.44s"/>
+      </g>
+
+      <rect class="scan-glow" x="-40" y="0" width="40" height="200" fill="url(#scanGrad)" filter="url(#glow)"/>
+
+      <!-- pencil, sketching its way along the rooftops -->
+      <g class="pencil">
+        <line class="pencil-body" x1="-9" y1="6" x2="6" y2="-6"/>
+        <circle class="pencil-tip" cx="8" cy="-8" r="2.4"/>
+        <animateMotion dur="2.5s" begin="0.25s" fill="freeze"
+          path="M20,90 L50,90 L60,60 L90,60 L100,100 L120,100 L130,40 L145,20 L160,40 L170,110 L190,110 L200,70 L235,70 L245,95 L265,95 L275,30 L305,30 L315,85 L340,85 L350,105 L370,105 L380,50 L412,50 L420,95 L442,95 L452,25 L466,8 L480,25 L490,100 L512,100 L522,65 L556,65 L566,105 L586,105 L596,45 L620,45 L630,90 L652,90 L662,60 L692,60 L702,100 L730,100"/>
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.04;0.92;1" dur="2.5s" begin="0.25s" fill="freeze"/>
+      </g>
+
+      <!-- ground line + dimension row -->
+      <line x1="10" y1="150" x2="750" y2="150" stroke="#F5F8FF" stroke-width="1"/>
+      <text class="bp-height" x="145" y="15" text-anchor="middle">R.L. +110</text>
+      <text class="bp-height" x="466" y="4" text-anchor="middle">R.L. +142</text>
+      <g class="bp-dim">
+        <line x1="10" y1="168" x2="750" y2="168"/>
+        <path d="M10 168 l6 -3 M10 168 l6 3"/>
+        <path d="M750 168 l-6 -3 M750 168 l-6 3"/>
+        <line x1="10" y1="163" x2="10" y2="173"/>
+        <line x1="380" y1="163" x2="380" y2="173"/>
+        <line x1="750" y1="163" x2="750" y2="173"/>
+      </g>
+      <text class="bp-label" x="380" y="182" text-anchor="middle">EAST FACADE — APPROX. SPAN 740 UNITS</text>
+
+      <!-- title block -->
+      <g class="bp-title">
+        <rect x="10" y="8" width="150" height="30"/>
+        <line x1="10" y1="20" x2="160" y2="20" stroke="#3E6699" stroke-width="0.8"/>
+        <line x1="90" y1="20" x2="90" y2="38" stroke="#3E6699" stroke-width="0.8"/>
+        <text x="16" y="16" font-size="6.5">SKYLINE — ELEVATION STUDY</text>
+        <text x="16" y="32" font-size="6">SCALE NTS</text>
+        <text x="96" y="32" font-size="6">SHEET 01 / REV A</text>
+      </g>
+    </svg>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="chapter" id="city">
+    <div class="num">01</div>
+    <div>
+      <h2>Landing in the bustle</h2>
+      <p>Hyderabad met me the way it meets most people: loud, glittering, and entirely unbothered by whether I was ready for it. I felt lucky just to land a role at a company my father had spoken of with such pride for years — it's hard to forget where you come from once you find yourself standing somewhere better than you ever imagined.</p>
+      <p>What struck me first wasn't the skyline, though the high-rises were impossible to ignore. It was the current running underneath them. In the engineers I worked alongside, I could see hope moving quietly through everything — a shared appetite to build something new, in a city dense enough to hold the population of a small country and somehow still make room for everyone's ambition.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="work">
+    <div class="num">02</div>
+    <div>
+      <p>The friendships crept up on me — easy conversations with colleagues, the kind of humor where everyone's fair game, and tea breaks that stretched a little longer than they should have. Someone always had a story about how impossibly cramped their hostel was, told with more affection than complaint. There's a particular comfort in being surrounded by people who are truly in it with you.</p>
+      <p>Then there were the debugging marathons before a deploy, and the long stretches where nothing seemed to work for weeks at a time. And yet, even in the frustration, there was an unspoken bond in knowing someone else was awake at 2am fighting the same kind of fire. Nobody really knows everything, and somehow everybody knows something — that's the strange, comforting truth of working in tech.</p>
+      <blockquote>An inferiority complex in the first few weeks, a superiority complex a few weeks after that.</blockquote>
+      <p>Every new project made a beginner of me again, and I got to watch that cycle repeat itself in everyone around me too. I'm glad to say I came out of it with a few gloriously geeky, genuinely good friends.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="num">03</div>
+    <div>
+      <h2>A kinder kind of ambition</h2>
+      <p>I'd heard about P.N.C. Menon's philanthropic work long before I understood the ecosystem behind it — mostly through my father, who spoke of it with quiet admiration. Being able to work somewhere driven by that same generosity turned out to be one of the more grounding parts of the experience.</p>
+      <p>The office itself surprised me too — photography lined the walls in a way that felt unexpectedly moving rather than decorative. There's something satisfying about showing up every day to a place shaped by a mission bigger than deadlines. And I never quite stopped being curious about the buildings themselves: how towers like that come together at all. One day, I'd love to sit down with an interior designer and just ask how the magic actually happens.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="num">04</div>
+    <div>
+      <h2>Bricks become homes</h2>
+      <p>Rich or poor, almost everyone shares the same quiet dream: a place to call their own. Some are lucky enough to actually find it — somewhere to put their feet up, share a meal with family, and let an entire childhood unfold into adulthood.</p>
+      <p>We're strange, sentimental creatures. A home is just brick and cement if you strip it down, and yet it becomes the place where memories are made, children are raised, and whole lives are lived. It's why the work of building homes always felt like more than construction to me.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="giving">
+    <div class="num">05</div>
+    <div>
+      <h2>Giving back</h2>
+      <p>What stayed with me most was learning how deliberate the generosity around the office really was. Spirit ran through a dedicated organization, the Sri Kurumba Educational and Charitable Trust, which P.N.C. Menon founded in 1994 to work on rural poverty, education, healthcare, and housing across Southern India.</p>
+
+      <div class="stat-strip" id="statStrip">
+        <div class="stat"><div class="figure" data-target="1994" data-suffix="">0</div><div class="label">Trust founded</div></div>
+        <div class="stat"><div class="figure" data-target="50" data-suffix="%">0%</div><div class="label">Of personal wealth pledged to charity</div></div>
+        <div class="stat"><div class="figure" data-target="100" data-suffix="">0</div><div class="label">Free homes delivered in 2024</div></div>
+        <div class="stat"><div class="figure" data-target="1000" data-suffix="">0</div><div class="label">Homes planned over four years</div></div>
+      </div>
+
+      <p class="spotlight-label">Where the pledge has gone</p>
+      <div class="spotlight-grid">
+        <div class="cause">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="#0F5C53" stroke-width="2"><path d="M6 18 24 9l18 9-18 9z"/><path d="M14 22v9c0 3 4.5 5.5 10 5.5S34 34 34 31v-9"/><path d="M42 18v10"/></svg>
+          <span class="year">Since 2007</span>
+          <h3>Sobha Academy</h3>
+          <p>A school built to give children from low-income, rural families in Kerala genuine access to quality education — the same kind of chance that, elsewhere, gets treated as a given rather than a gift.</p>
+          <div class="tags"><span class="tag">Education</span></div>
+        </div>
+
+        <div class="cause">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="#0F5C53" stroke-width="2"><path d="M24 40s-14-8.5-14-18a8 8 0 0 1 14-5.3A8 8 0 0 1 38 22c0 9.5-14 18-14 18z"/></svg>
+          <span class="year">Since 2006</span>
+          <h3>Sobha Hermitage</h3>
+          <p>A residence for elderly people with nowhere else to turn, offering free food, clothing, healthcare, and a real measure of security in their later years.</p>
+          <div class="tags"><span class="tag">Elder care</span></div>
+        </div>
+
+        <div class="cause">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="#0F5C53" stroke-width="2"><path d="M8 22 24 9l16 13"/><path d="M12 22v17h24V22"/><path d="M20 39v-9h8v9"/></svg>
+          <span class="year">2024 onward</span>
+          <h3>The Community Home Project</h3>
+          <p>The first phase handed over 100 free houses to women-led families in Palakkad district — part of a commitment to build 1,000 homes over four years, each one signed over debt-free.</p>
+          <div class="tags"><span class="tag">Housing</span></div>
+        </div>
+
+        <div class="cause">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="#0F5C53" stroke-width="2"><path d="M24 6l4 8 9 1-6.5 6 1.5 9-8-4.5-8 4.5 1.5-9L11 15l9-1z"/></svg>
+          <span class="year">Ongoing</span>
+          <h3>Sobha Icon</h3>
+          <p>A talent-development track for students from schools with limited resources, pairing them with regular mentoring and progress tracking rather than a one-time scholarship. Four graduates went on to win the Kerala Chief Minister's Student Talent Award.</p>
+          <div class="tags"><span class="tag">Education</span><span class="tag">Mentorship</span></div>
+        </div>
+
+        <div class="cause">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="#0F5C53" stroke-width="2"><circle cx="24" cy="16" r="7"/><path d="M10 40c0-8 6-13 14-13s14 5 14 13"/></svg>
+          <span class="year">Ongoing</span>
+          <h3>Young Mother Rehabilitation Programme</h3>
+          <p>Housing, employment, and schooling for young widows and their children in self-contained flats, at no cost. Several of the women it has supported have gone on to remarry with the trust's help.</p>
+          <div class="tags"><span class="tag">Family support</span></div>
+        </div>
+      </div>
+
+      <p style="margin-top:28px;">In 2016, P.N.C. and Sobha Menon signed the Giving Pledge, committing half their wealth to causes like these. The reach goes beyond Kerala too — a pledge toward the Sabarmati Riverfront development in Ahmedabad, and a contribution to a cancer hospital in Dubai through the Al Jalila Foundation. None of it was advertised on the walls I walked past every day — I only pieced it together later, which somehow made it feel more genuine, not less.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="rule"></div>
+    <p>Some cities pass through you. This one, it turns out, stayed.</p>
+    <div class="sign">Still grateful for the chaos and the tea breaks.</div>
+    <p class="sources">Details on the Sri Kurumba Educational and Charitable Trust, Sobha Academy, Sobha Hermitage, and the Community Home Project are drawn from public reporting by Sobha Realty and the Sri Kurumba Trust.</p>
+    <a class="back" href="#top">Back to top</a>
+  </footer>
+</div>
+
+<script>
+  const strip = document.getElementById('statStrip');
+  const figures = strip.querySelectorAll('.figure');
+  let animated = false;
+
+  function animateCount(el){
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(target * eased);
+      el.textContent = val + suffix;
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !animated){
+        animated = true;
+        if(prefersReduced){
+          figures.forEach(f => f.textContent = f.dataset.target + (f.dataset.suffix || ''));
+        } else {
+          figures.forEach(f => animateCount(f));
+        }
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(strip);
+</script>
+
+</body>
+</html>
